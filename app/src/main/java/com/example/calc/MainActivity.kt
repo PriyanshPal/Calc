@@ -6,7 +6,9 @@ import android.text.Editable
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,7 +26,11 @@ class MainActivity : AppCompatActivity() {
         disableKeyBoard()
 
         buttonEquals.setOnClickListener {
-            tvResult.text = calculateResult()
+            if(isValid(etExpression.text.toString()))
+                tvResult.text = calculateResult()
+            else{
+                Toast.makeText(applicationContext, "Invalid Expression", Toast.LENGTH_SHORT).show()
+            }
         }
 
 
@@ -166,6 +172,36 @@ class MainActivity : AppCompatActivity() {
             list.add(currentDigit)
         }
         return list
+    }
+
+    private fun isValid(infix:String):Boolean{
+        val n=infix.length;
+        if(infix.length==0 || infix[0]==')' || infix[n-1]=='(') return false;
+        val operator = arrayOf('+','-','x','/','^')
+        if(infix[n-1] in operator) return false;
+
+        //now we need to iteratre over string to check all operators are correct or not
+        for(i in 0 until n){
+            if(infix[i] in operator){
+                if(infix[i]!='-' && infix[i-1]=='(') return false;
+                if(infix[i+1]==')') return false;
+            }
+        }
+        //handling exception like 24+56(24+56) when a open bracket in in middle of statement then there should be a operator
+        for(i in 1 until n-1){
+            if(infix[i]=='(' && infix[i-1] !in operator)   return false;
+            if(infix[i]==')' && (infix[i+1] !in operator))   return false;
+        }
+        //check if the brackets are correct or not
+        val tstack = Stack<Char>()
+        for(i in 0 until n){
+            if(infix[i]=='(')   tstack.push(infix[i])
+            else if(infix[i]==')'){
+                if(tstack.isEmpty())    return false;
+                else tstack.pop();
+            }
+        }
+        return tstack.isEmpty()
     }
 }
 
