@@ -12,7 +12,7 @@
         android:id="@+id/etExpression"
         android:layout_width="408dp"
         android:layout_height="60dp"
-        android:layout_marginTop="184dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="4dp"
         android:background="@android:color/transparent"
         android:ems="10"
@@ -21,7 +21,7 @@
         android:textAlignment="viewEnd"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <LinearLayout
         android:layout_width="380dp"
@@ -318,4 +318,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etExpression"
         tools:text="98.00" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="120dp"
+        android:layout_height="119dp"
+        android:layout_marginTop="84dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/calc" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
